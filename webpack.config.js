@@ -27,15 +27,6 @@ module.exports = {
       ...sharedMappings.getAliases()
     }
   },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
-  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'angularApp',
