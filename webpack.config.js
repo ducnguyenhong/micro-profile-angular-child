@@ -11,22 +11,37 @@ sharedMappings.register(path.join(__dirname, 'tsconfig.json'), [
 module.exports = {
   output: {
     uniqueName: 'angularApp',
-    publicPath: 'auto'
+    publicPath: 'auto',
+    scriptType: 'text/javascript'
   },
   optimization: {
     runtimeChunk: false
   },
+  devServer: {
+    port: 4003,
+    historyApiFallback: true
+  },
   resolve: {
+    extensions: ['.ts', '.js', '.json'],
     alias: {
       ...sharedMappings.getAliases()
     }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'angularApp',
       filename: 'remoteEntry.js',
       exposes: {
-        './App': './src/bootstrap.ts'
+        './App': path.resolve(__dirname, './src/bootstrap.ts')
       },
 
       shared: share({
